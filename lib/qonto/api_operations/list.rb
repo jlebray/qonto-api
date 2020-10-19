@@ -7,7 +7,7 @@ module Qonto
         params ||= {}
         opts[:client] ||= Qonto::Client.current_client
 
-        response = request(:get, url, params)
+        response = request(:get, url, params, opts)
         parsed_body = Oj.load(response.body) || {}
 
         Qonto::ListObject.new(
