@@ -8,10 +8,10 @@ module Qonto
         opts[:client] ||= Qonto::Client.current_client
 
         response = request(:get, url, params, opts)
-        parsed_body = Oj.load(response.body) || {}
+        parsed_body = JSON.parse(response.body) || {}
 
         Qonto::ListObject.new(
-          parsed_body["#{self::OBJECT_NAME}s"] || [],
+          parsed_body["#{self::OBJECT_NAME}s"].map { new(_1) } || [],
           parsed_body['meta'] || {},
           url,
           params,

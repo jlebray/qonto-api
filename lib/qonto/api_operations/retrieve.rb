@@ -10,7 +10,7 @@ module Qonto
         opts[:client] ||= Qonto::Client.current_client
 
         response = request(:get, url(id), params, opts)
-        parsed_body = Oj.load(response.body)
+        parsed_body = JSON.parse(response.body)
 
         new(parsed_body[self::OBJECT_NAME])
       end

@@ -10,7 +10,7 @@ module Qonto
       balance
       balance_cents
       authorized_balance
-      authorized_balance_cent
+      authorized_balance_cents
     ].freeze
 
     attr_accessor(*ATTRIBUTES)

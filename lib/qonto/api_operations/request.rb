@@ -14,7 +14,10 @@ module Qonto
           client = opts[:client]
           headers = client.authorization_header
 
-          faraday_method(method).call(url, params, headers)
+          response = faraday_method(method).call(url, params, headers)
+          raise error_from_response(response) if response.status >= 400
+
+          response
         end
 
         private
@@ -24,6 +27,23 @@ module Qonto
 
           raise ArgumentError, 'request params should be either a Hash or nil ' \
             "(was a #{params.class})"
+        end
+
+        def error_from_response(response)
+          message =
+            begin
+              JSON.parse(response.body).dig('error_model', 'message')
+            rescue JSON::ParserError # rubocop:disable Lint/SuppressedException
+            end
+
+          message ||= 'An unexpected error occured'
+
+          raise Qonto::APIError.new(
+            message,
+            status: response.status,
+            headers: response.headers,
+            body: response.body
+          )
         end
 
         def faraday_method(method)

@@ -1,22 +1,24 @@
 # frozen_string_literal: true
 
 require 'faraday'
+require 'json'
 
 # Operations
-require 'qonto/api_operations/list'
-require 'qonto/api_operations/request'
-require 'qonto/api_operations/retrieve'
+require_relative 'qonto/api_operations/list'
+require_relative 'qonto/api_operations/request'
+require_relative 'qonto/api_operations/retrieve'
 
 # Top level classes
-require 'qonto/client'
-require 'qonto/list_object'
-require 'qonto/resource'
+require_relative 'qonto/client'
+require_relative 'qonto/list_object'
+require_relative 'qonto/resource'
+require_relative 'qonto/errors'
 
 # Resources
-require 'qonto/resources/bank_account'
-require 'qonto/resources/organization'
-require 'qonto/resources/transaction'
-require 'qonto/resources/attachment'
+require_relative 'qonto/resources/bank_account'
+require_relative 'qonto/resources/organization'
+require_relative 'qonto/resources/transaction'
+require_relative 'qonto/resources/attachment'
 
 module Qonto
   def self.with_client(url, login, secret_key)

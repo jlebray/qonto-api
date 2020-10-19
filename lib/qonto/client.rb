@@ -2,7 +2,10 @@
 
 module Qonto
   class Client
-    class_attribute :current_client
+    class << self
+      attr_accessor :current_client
+    end
+
     attr_accessor :url, :login, :secret_key
 
     def initialize(url, login, secret_key)
