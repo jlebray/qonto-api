@@ -6,12 +6,12 @@ module Qonto
       ALLOWED_METHODS = %w[get post delete head trace].freeze
 
       module ClassMethods
-        def request(method, url, params = {})
+        def request(method, url, params = {}, opts = {})
           params ||= {}
 
           error_on_invalid_params(params)
 
-          client = Qonto::Client.current_client
+          client = opts[:client]
           headers = client.authorization_header
 
           faraday_method(method).call(url, params, headers)

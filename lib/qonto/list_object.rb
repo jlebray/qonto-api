@@ -6,13 +6,14 @@ module Qonto
     include Qonto::APIOperations::Request
     include Qonto::APIOperations::List
 
-    attr_accessor :data, :meta, :url, :params
+    attr_accessor :data, :meta, :url, :params, :opts
 
-    def initialize(data, meta, url, params = {})
+    def initialize(data, meta, url, params = {}, opts = {})
       self.data = data
       self.meta = meta
       self.url = url
       self.params = params
+      self.opts = opts
     end
 
     def each(&block)
@@ -35,7 +36,7 @@ module Qonto
     def next_page
       return if current_page >= total_pages
 
-      list(params.merge(current_page: current_page + 1))
+      list(params.merge(current_page: current_page + 1), opts)
     end
 
     def empty?

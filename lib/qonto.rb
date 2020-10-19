@@ -16,6 +16,7 @@ require 'qonto/resource'
 require 'qonto/resources/bank_account'
 require 'qonto/resources/organization'
 require 'qonto/resources/transaction'
+require 'qonto/resources/attachment'
 
 module Qonto
   def self.with_client(url, login, secret_key)

@@ -5,10 +5,11 @@ require 'json'
 module Qonto
   module APIOperations
     module Retrieve
-      def retrieve(id, params = {})
+      def retrieve(id, params = {}, opts = {})
         params ||= {}
+        opts[:client] ||= Qonto::Client.current_client
 
-        response = request(:get, url(id), params)
+        response = request(:get, url(id), params, opts)
         parsed_body = Oj.load(response.body)
 
         new(parsed_body[self::OBJECT_NAME])
