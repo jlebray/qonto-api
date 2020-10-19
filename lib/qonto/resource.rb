@@ -26,5 +26,19 @@ module Qonto
         )
       end
     end
+
+    def to_h
+      hash = {}
+
+      self.class::ATTRIBUTES.each do |attr|
+        hash[attr] = public_send(attr)
+      end
+
+      self.class::NESTED_ATTRIBUTES.each do |attr, _|
+        hash[attr] = public_send(attr).map(&:to_h)
+      end
+
+      hash
+    end
   end
 end
